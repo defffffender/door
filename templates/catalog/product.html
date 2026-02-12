@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ product.name }} — {{ site_settings.company_name|default:"Door Company" }}{% endblock %}
+{% if product.meta_description %}{% block meta_description %}{{ product.meta_description }}{% endblock %}{% endif %}
+{% if product.meta_keywords %}{% block meta_keywords %}{{ product.meta_keywords }}{% endblock %}{% endif %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">{{ product.name }}</h1>
+        <div class="breadcrumbs">
+            <a href="{% url 'home' %}">{% trans "Главная" %}</a> /
+            <a href="{% url 'catalog' %}">{% trans "Каталог" %}</a> /
+            <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a> /
+            <span>{{ product.name }}</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="product-detail">
+            <div class="product-gallery">
+                <div class="product-gallery__main">
+                    {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}">{% endif %}
+                </div>
+                {% if product.images.all %}
+                <div class="product-gallery__thumbs">
+                    <div class="product-gallery__thumb active">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </div>
+                    {% for img in product.images.all %}
+                    <div class="product-gallery__thumb">
+                        <img src="{{ img.image.url }}" alt="{{ product.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <p class="product-info__category">{{ product.category.name }}</p>
+                <h2 class="product-info__name">{{ product.name }}</h2>
+                {% if product.price %}<p class="product-info__price">{% trans "от" %} {{ product.price|floatformat:0 }} {% trans "сум" %}</p>{% endif %}
+                {% if product.description %}<div class="product-info__desc">{{ product.description|linebreaks }}</div>{% endif %}
+                <a href="{% url 'contacts' %}" class="btn btn--primary btn--lg">{% trans "Заказать" %} <i class="fas fa-paper-plane"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ project.title }} — {{ site_settings.company_name|default:"Door Company" }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">{{ project.title }}</h1>
+        <div class="breadcrumbs">
+            <a href="{% url 'home' %}">{% trans "Главная" %}</a> /
+            <a href="{% url 'portfolio_list' %}">{% trans "Наши работы" %}</a> /
+            <span>{{ project.title|truncatewords:5 }}</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="article-detail">
+            {% if project.image %}
+            <div class="article-detail__image">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+            </div>
+            {% endif %}
+            {% if project.description %}
+            <div class="article-detail__content">
+                {{ project.description|linebreaks }}
+            </div>
+            {% endif %}
+            {% if project.images.all %}
+            <div class="portfolio-grid" style="margin-top:30px;">
+                {% for img in project.images.all %}
+                <div class="portfolio-card">
+                    <div class="portfolio-card__image">
+                        <img src="{{ img.image.url }}" alt="{{ project.title }}" loading="lazy">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

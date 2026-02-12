@@ -1,0 +1,21 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block title %}{% if object %}Редактировать{% else %}Добавить{% endif %} партнёра — Панель управления{% endblock %}
+{% block page_title %}{% if object %}Редактировать{% else %}Добавить{% endif %} партнёра{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="panel-form">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<div class="form-error">{{ field.errors.0 }}</div>{% endif %}
+    </div>
+    {% endfor %}
+    <div class="form-actions">
+        <button type="submit" class="btn btn--primary"><i class="fas fa-save"></i> Сохранить</button>
+        <a href="{% url 'panel_partner_list' %}" class="btn btn--outline">Отмена</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,140 @@
+# English translations
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+
+msgid "Каталог"
+msgstr "Catalog"
+
+msgid "О компании"
+msgstr "About"
+
+msgid "Новости"
+msgstr "News"
+
+msgid "Наши работы"
+msgstr "Our Work"
+
+msgid "Контакты"
+msgstr "Contacts"
+
+msgid "Связаться"
+msgstr "Contact Us"
+
+msgid "Производитель входных дверей в Ташкенте"
+msgstr "Entrance Door Manufacturer in Tashkent"
+
+msgid "Надёжные входные двери"
+msgstr "Reliable Entrance Doors"
+
+msgid "Производство стальных дверей в Ташкенте"
+msgstr "Steel Door Manufacturing in Tashkent"
+
+msgid "Связаться с нами"
+msgstr "Contact Us"
+
+msgid "Популярные товары"
+msgstr "Popular Products"
+
+msgid "сум"
+msgstr "UZS"
+
+msgid "Весь каталог"
+msgstr "Full Catalog"
+
+msgid "Линейка продукции"
+msgstr "Product Line"
+
+msgid "Подробнее"
+msgstr "Learn More"
+
+msgid "Наши преимущества"
+msgstr "Our Advantages"
+
+msgid "Четыре столпа качества"
+msgstr "Four Pillars of Quality"
+
+msgid "Наши партнёры"
+msgstr "Our Partners"
+
+msgid "Свяжитесь с нами"
+msgstr "Get in Touch"
+
+msgid "Оставьте заявку и мы свяжемся с вами в ближайшее время"
+msgstr "Leave a request and we will contact you shortly"
+
+msgid "Ваше имя"
+msgstr "Your Name"
+
+msgid "Сообщение"
+msgstr "Message"
+
+msgid "Отправить заявку"
+msgstr "Submit Request"
+
+msgid "Навигация"
+msgstr "Navigation"
+
+msgid "Все права защищены."
+msgstr "All rights reserved."
+
+msgid "Главная"
+msgstr "Home"
+
+msgid "Каталог продукции"
+msgstr "Product Catalog"
+
+msgid "Каталог пока пуст."
+msgstr "The catalog is empty."
+
+msgid "В этой категории пока нет товаров."
+msgstr "No products in this category yet."
+
+msgid "Заказать"
+msgstr "Order"
+
+msgid "Новостей пока нет."
+msgstr "No news yet."
+
+msgid "Проектов пока нет."
+msgstr "No projects yet."
+
+msgid "Все проекты"
+msgstr "All Projects"
+
+msgid "Телефон"
+msgstr "Phone"
+
+msgid "Адрес"
+msgstr "Address"
+
+msgid "Время работы"
+msgstr "Working Hours"
+
+msgid "Пн-Сб: 09:00 - 18:00"
+msgstr "Mon-Sat: 09:00 - 18:00"
+
+msgid "Оставить заявку"
+msgstr "Leave a Request"
+
+msgid "Отправить"
+msgstr "Submit"
+
+msgid "Откройте дверь в безопасное будущее"
+msgstr "Open the Door to a Secure Future"
+
+msgid "Производство и установка стальных дверей в Ташкенте. Надёжность, качество, индивидуальный подход."
+msgstr "Manufacturing and installation of steel doors in Tashkent. Reliability, quality, individual approach."
+
+msgid "Популярное"
+msgstr "Popular"
+
+msgid "от"
+msgstr "from"
+
+msgid "Почему клиенты выбирают нас"
+msgstr "Why Clients Choose Us"
+
+msgid "Скачать каталог"
+msgstr "Download Catalog"

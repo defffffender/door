@@ -1,0 +1,50 @@
+{% load custom_admin_tags %}
+<aside class="sidebar">
+    <div class="sidebar__logo"><a href="{% url 'panel_dashboard' %}"><i class="fas fa-cog"></i> Панель</a></div>
+
+    <div class="sidebar__section">
+        <div class="sidebar__label">Основное</div>
+        <nav class="sidebar__nav">
+            <a href="{% url 'panel_dashboard' %}" class="{% active_link 'panel_dashboard' %}"><i class="fas fa-home"></i> Дашборд</a>
+            <a href="{% url 'panel_settings' %}" class="{% active_link 'panel_settings' %}"><i class="fas fa-cog"></i> Настройки сайта</a>
+            <a href="{% url 'panel_seo_list' %}" class="{% active_link 'panel_seo' %}"><i class="fas fa-search"></i> SEO страниц</a>
+        </nav>
+    </div>
+
+    <div class="sidebar__section">
+        <div class="sidebar__label">Контент</div>
+        <nav class="sidebar__nav">
+            <a href="{% url 'panel_banner_list' %}" class="{% active_link 'panel_banner' %}"><i class="fas fa-images"></i> Баннеры</a>
+            <a href="{% url 'panel_advantage_list' %}" class="{% active_link 'panel_advantage' %}"><i class="fas fa-star"></i> Преимущества</a>
+            <a href="{% url 'panel_statistic_list' %}" class="{% active_link 'panel_statistic' %}"><i class="fas fa-chart-bar"></i> Статистика</a>
+            <a href="{% url 'panel_partner_list' %}" class="{% active_link 'panel_partner' %}"><i class="fas fa-handshake"></i> Партнёры</a>
+            <a href="{% url 'panel_qualitypillar_list' %}" class="{% active_link 'panel_qualitypillar' %}"><i class="fas fa-shield-alt"></i> Столпы качества</a>
+        </nav>
+    </div>
+
+    <div class="sidebar__section">
+        <div class="sidebar__label">Каталог</div>
+        <nav class="sidebar__nav">
+            <a href="{% url 'panel_category_list' %}" class="{% active_link 'panel_category' %}"><i class="fas fa-folder"></i> Категории</a>
+            <a href="{% url 'panel_product_list' %}" class="{% active_link 'panel_product' %}"><i class="fas fa-door-open"></i> Товары</a>
+        </nav>
+    </div>
+
+    <div class="sidebar__section">
+        <div class="sidebar__label">Публикации</div>
+        <nav class="sidebar__nav">
+            <a href="{% url 'panel_article_list' %}" class="{% active_link 'panel_article' %}"><i class="fas fa-newspaper"></i> Новости</a>
+            <a href="{% url 'panel_project_list' %}" class="{% active_link 'panel_project' %}"><i class="fas fa-briefcase"></i> Проекты</a>
+        </nav>
+    </div>
+
+    <div class="sidebar__section">
+        <div class="sidebar__label">Обращения</div>
+        <nav class="sidebar__nav">
+            <a href="{% url 'panel_contacts' %}" class="{% active_link 'panel_contact' %}">
+                <i class="fas fa-envelope"></i> Заявки
+                {% if unread_contacts %}<span class="badge">{{ unread_contacts }}</span>{% endif %}
+            </a>
+        </nav>
+    </div>
+</aside>

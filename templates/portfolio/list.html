@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% if page_seo and page_seo.meta_title %}{{ page_seo.meta_title }}{% else %}{% trans "Наши работы" %} — {{ site_settings.company_name|default:"Door Company" }}{% endif %}{% endblock %}
+{% if page_seo.meta_description %}{% block meta_description %}{{ page_seo.meta_description }}{% endblock %}{% endif %}
+{% if page_seo.meta_keywords %}{% block meta_keywords %}{{ page_seo.meta_keywords }}{% endblock %}{% endif %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">{% trans "Наши работы" %}</h1>
+        <div class="breadcrumbs">
+            <a href="{% url 'home' %}">{% trans "Главная" %}</a> / <span>{% trans "Наши работы" %}</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="portfolio-grid">
+            {% for project in projects %}
+            <a href="{{ project.get_absolute_url }}" class="portfolio-card">
+                <div class="portfolio-card__image">
+                    {% if project.image %}<img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">{% endif %}
+                </div>
+                <div class="portfolio-card__overlay">
+                    <h3 class="portfolio-card__title">{{ project.title }}</h3>
+                </div>
+            </a>
+            {% empty %}
+            <p>{% trans "Проектов пока нет." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

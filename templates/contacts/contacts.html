@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% if page_seo and page_seo.meta_title %}{{ page_seo.meta_title }}{% else %}{% trans "Контакты" %} — {{ site_settings.company_name|default:"Door Company" }}{% endif %}{% endblock %}
+{% if page_seo.meta_description %}{% block meta_description %}{{ page_seo.meta_description }}{% endblock %}{% endif %}
+{% if page_seo.meta_keywords %}{% block meta_keywords %}{{ page_seo.meta_keywords }}{% endblock %}{% endif %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">{% trans "Контакты" %}</h1>
+        <div class="breadcrumbs">
+            <a href="{% url 'home' %}">{% trans "Главная" %}</a> / <span>{% trans "Контакты" %}</span>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="message message--{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<section class="section">
+    <div class="container">
+        <div class="contacts-page">
+            <div class="contacts-info">
+                {% if site_settings.phone %}
+                <div class="contacts-info__item">
+                    <div class="contacts-info__icon"><i class="fas fa-phone"></i></div>
+                    <div class="contacts-info__text">
+                        <h4>{% trans "Телефон" %}</h4>
+                        <a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a>
+                        {% if site_settings.phone2 %}<br><a href="tel:{{ site_settings.phone2 }}">{{ site_settings.phone2 }}</a>{% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% if site_settings.email %}
+                <div class="contacts-info__item">
+                    <div class="contacts-info__icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contacts-info__text">
+                        <h4>Email</h4>
+                        <a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a>
+                    </div>
+                </div>
+                {% endif %}
+                {% if site_settings.address %}
+                <div class="contacts-info__item">
+                    <div class="contacts-info__icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contacts-info__text">
+                        <h4>{% trans "Адрес" %}</h4>
+                        <p>{{ site_settings.address }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="contacts-info__item">
+                    <div class="contacts-info__icon"><i class="fas fa-clock"></i></div>
+                    <div class="contacts-info__text">
+                        <h4>{% trans "Время работы" %}</h4>
+                        <p>{% trans "Пн-Сб: 09:00 - 18:00" %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contacts-form">
+                <h3>{% trans "Оставить заявку" %}</h3>
+                <form method="post" enctype="multipart/form-data" class="contact-form">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group">
+                        {{ field }}
+                        {% if field.errors %}
+                        <span class="form-error">{{ field.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn--primary btn--lg">{% trans "Отправить" %} <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if site_settings.map_embed %}
+<section style="padding:0 0 80px;">
+    <div class="container">
+        <div class="footer__map">
+            {{ site_settings.map_embed|safe }}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

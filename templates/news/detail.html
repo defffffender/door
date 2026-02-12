@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% if article.meta_title %}{{ article.meta_title }}{% else %}{{ article.title }} — {{ site_settings.company_name|default:"Door Company" }}{% endif %}{% endblock %}
+{% if article.meta_description %}{% block meta_description %}{{ article.meta_description }}{% endblock %}{% endif %}
+{% if article.meta_keywords %}{% block meta_keywords %}{{ article.meta_keywords }}{% endblock %}{% endif %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">{{ article.title }}</h1>
+        <div class="breadcrumbs">
+            <a href="{% url 'home' %}">{% trans "Главная" %}</a> /
+            <a href="{% url 'news_list' %}">{% trans "Новости" %}</a> /
+            <span>{{ article.title|truncatewords:5 }}</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="article-detail">
+            <p class="news-card__date" style="margin-bottom:20px;">{{ article.created_at|date:"d.m.Y" }}</p>
+            {% if article.image %}
+            <div class="article-detail__image">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}">
+            </div>
+            {% endif %}
+            <div class="article-detail__content">
+                {{ article.content|linebreaks }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

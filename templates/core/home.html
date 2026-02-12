@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% if page_seo and page_seo.meta_title %}{{ page_seo.meta_title }}{% else %}{{ site_settings.company_name|default:"Door Company" }} — {% trans "Производитель входных дверей в Ташкенте" %}{% endif %}{% endblock %}
+{% if page_seo.meta_description %}{% block meta_description %}{{ page_seo.meta_description }}{% endblock %}{% endif %}
+{% if page_seo.meta_keywords %}{% block meta_keywords %}{{ page_seo.meta_keywords }}{% endblock %}{% endif %}
+
+{% block content %}
+<!-- Hero Slider -->
+<section class="hero-slider">
+    <div class="slider" id="heroSlider">
+        <div class="slider__track">
+            {% for banner in banners %}
+            <div class="slider__slide" {% if banner.image %}style="background-image: url('{{ banner.image.url }}')"{% endif %}>
+                <div class="slider__overlay"></div>
+                <div class="container">
+                    <div class="slider__content">
+                        <h1 class="slider__title">{{ banner.title }}</h1>
+                        {% if banner.subtitle %}<p class="slider__subtitle">{{ banner.subtitle }}</p>{% endif %}
+                        <div class="slider__buttons">
+                            <a href="{{ banner.button_url|default:'#' }}" class="btn btn--ghost btn--lg">{{ banner.button_text|default:"Связаться с нами" }}</a>
+                            {% if site_settings.catalog_pdf %}
+                            <a href="{{ site_settings.catalog_pdf.url }}" class="btn btn--white btn--lg" download><i class="fas fa-file-pdf"></i> {% trans "Скачать каталог" %}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="slider__slide slider__slide--placeholder">
+                <div class="slider__overlay"></div>
+                <div class="container">
+                    <div class="slider__content">
+                        <h1 class="slider__title">{% trans "Откройте дверь в безопасное будущее" %}</h1>
+                        <p class="slider__subtitle">{% trans "Производство и установка стальных дверей в Ташкенте. Надёжность, качество, индивидуальный подход." %}</p>
+                        <div class="slider__buttons">
+                            <a href="{% url 'contacts' %}" class="btn btn--ghost btn--lg">{% trans "Связаться с нами" %}</a>
+                            {% if site_settings.catalog_pdf %}
+                            <a href="{{ site_settings.catalog_pdf.url }}" class="btn btn--white btn--lg" download><i class="fas fa-file-pdf"></i> {% trans "Скачать каталог" %}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if banners|length > 1 %}
+        <button class="slider__arrow slider__arrow--prev" id="sliderPrev"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider__arrow slider__arrow--next" id="sliderNext"><i class="fas fa-chevron-right"></i></button>
+        <div class="slider__dots" id="sliderDots"></div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Popular Products -->
+{% if popular_products %}
+<section class="section">
+    <div class="container">
+        <h2 class="section__title">{% trans "Популярные товары" %}</h2>
+        <div class="section__divider"></div>
+        <div class="products-grid">
+            {% for product in popular_products %}
+            <a href="{{ product.get_absolute_url }}" class="product-card">
+                {% if product.is_popular %}
+                <span class="product-card__badge product-card__badge--popular">{% trans "Популярное" %}</span>
+                {% endif %}
+                <div class="product-card__image">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                    {% endif %}
+                </div>
+                <div class="product-card__info">
+                    <p class="product-card__category">{{ product.category.name }}</p>
+                    <h3 class="product-card__name">{{ product.name }}</h3>
+                    {% if product.price %}
+                    <p class="product-card__price"><span>{% trans "от" %}</span> {{ product.price|floatformat:0 }} {% trans "сум" %}</p>
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="section__action">
+            <a href="{% url 'catalog' %}" class="btn btn--outline">{% trans "Весь каталог" %} <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Product Line / Categories -->
+{% if categories %}
+<section class="section section--gray">
+    <div class="container">
+        <h2 class="section__title">{% trans "Линейка продукции" %}</h2>
+        <div class="section__divider"></div>
+        <div class="categories-grid">
+            {% for category in categories %}
+            <a href="{{ category.get_absolute_url }}" class="category-card">
+                <div class="category-card__image">
+                    {% if category.image %}
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" loading="lazy">
+                    {% endif %}
+                </div>
+                <div class="category-card__overlay"></div>
+                <h3 class="category-card__name">{{ category.name }}</h3>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- About Section -->
+<section class="section">
+    <div class="container">
+        <div class="about-home">
+            <div class="about-home__text">
+                <h2 class="section__title section__title--left">{% trans "О компании" %}</h2>
+                <p>{{ site_settings.about_text|default:"Мы являемся ведущим производителем стальных дверей в Узбекистане. Наша компания сочетает современные технологии производства с индивидуальным подходом к каждому клиенту, обеспечивая высокое качество и надёжность продукции." }}</p>
+                <a href="{% url 'about' %}" class="btn btn--outline">{% trans "Подробнее" %} <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="about-home__image">
+                <img src="{% static 'img/about-placeholder.jpg' %}" alt="{% trans 'О компании' %}" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8edf3,#d0d8e4)';this.style.display='none';">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Advantages -->
+{% if advantages %}
+<section class="section section--dark">
+    <div class="container">
+        <h2 class="section__title section__title--white">{% trans "Наши преимущества" %}</h2>
+        <p class="section__subtitle section__subtitle--white">{% trans "Почему клиенты выбирают нас" %}</p>
+        <div class="advantages-grid">
+            {% for advantage in advantages %}
+            <div class="advantage-card">
+                <div class="advantage-card__bg" style="background-image:url('{% if advantage.icon %}{% endif %}');background-color:#1a3a5c;"></div>
+                <div class="advantage-card__overlay"></div>
+                <div class="advantage-card__content">
+                    {% if advantage.icon %}<div class="advantage-card__icon"><i class="{{ advantage.icon }}"></i></div>{% endif %}
+                    <h3 class="advantage-card__title">{{ advantage.title }}</h3>
+                    <p class="advantage-card__desc">{{ advantage.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Quality Pillars -->
+{% if quality_pillars %}
+<section class="section section--accent">
+    <div class="container">
+        <h2 class="section__title">{% trans "Четыре столпа качества" %}</h2>
+        <div class="section__divider"></div>
+        <div class="pillars-grid">
+            {% for pillar in quality_pillars %}
+            <div class="pillar-card">
+                {% if pillar.image %}
+                <div class="pillar-card__image">
+                    <img src="{{ pillar.image.url }}" alt="{{ pillar.title }}" loading="lazy">
+                </div>
+                {% endif %}
+                <h3 class="pillar-card__title">{{ pillar.title }}</h3>
+                <p class="pillar-card__desc">{{ pillar.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Statistics -->
+{% if statistics %}
+<section class="section section--primary">
+    <div class="container">
+        <div class="stats-grid">
+            {% for stat in statistics %}
+            <div class="stat-item">
+                <div class="stat-item__icon"><i class="fas fa-chart-line"></i></div>
+                <div class="stat-item__number">{{ stat.number }}</div>
+                <div class="stat-item__label">{{ stat.label }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Partners -->
+{% if partners %}
+<section class="section partners-section">
+    <div class="container">
+        <h2 class="section__title">{% trans "Наши партнёры" %}</h2>
+        <div class="section__divider"></div>
+        <div class="partners-grid">
+            {% for partner in partners %}
+            <div class="partner-logo">
+                {% if partner.logo %}
+                    {% if partner.url %}
+                    <a href="{{ partner.url }}" target="_blank" rel="noopener">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" loading="lazy">
+                    </a>
+                    {% else %}
+                    <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" loading="lazy">
+                    {% endif %}
+                {% else %}
+                <span style="font-size:14px;font-weight:600;color:#999;">{{ partner.name }}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Portfolio Preview -->
+{% if projects %}
+<section class="section">
+    <div class="container">
+        <h2 class="section__title">{% trans "Наши работы" %}</h2>
+        <div class="section__divider"></div>
+        <div class="portfolio-grid">
+            {% for project in projects %}
+            <a href="{{ project.get_absolute_url }}" class="portfolio-card">
+                <div class="portfolio-card__image">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
+                    {% endif %}
+                </div>
+                <div class="portfolio-card__overlay">
+                    <div class="portfolio-card__info">
+                        <h3 class="portfolio-card__title">{{ project.title }}</h3>
+                        <p class="portfolio-card__desc">{% trans "Подробнее" %} &rarr;</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="section__action">
+            <a href="{% url 'portfolio_list' %}" class="btn btn--outline">{% trans "Все проекты" %} <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Contact Form -->
+<section class="section section--gray">
+    <div class="container">
+        <div class="contact-home">
+            <h2 class="section__title">{% trans "Свяжитесь с нами" %}</h2>
+            <p class="section__subtitle">{% trans "Оставьте заявку и мы свяжемся с вами в ближайшее время" %}</p>
+            <form action="{% url 'contacts' %}" method="post" class="contact-form contact-form--home">
+                {% csrf_token %}
+                <div class="contact-form__row">
+                    <input type="text" name="name" placeholder="{% trans 'Ваше имя' %}" class="form-input" required>
+                    <input type="tel" name="phone" placeholder="+998 __ ___ __ __" class="form-input" required>
+                </div>
+                <textarea name="message" placeholder="{% trans 'Сообщение' %}" class="form-input" rows="3"></textarea>
+                <button type="submit" class="btn btn--primary btn--lg" style="align-self:center;">{% trans "Отправить заявку" %} <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

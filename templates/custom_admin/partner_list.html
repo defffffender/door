@@ -1,0 +1,30 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block title %}Партнёры — Панель управления{% endblock %}
+{% block page_title %}Партнёры{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:16px;">
+    <a href="{% url 'panel_partner_create' %}" class="btn btn--primary"><i class="fas fa-plus"></i> Добавить</a>
+</div>
+<div class="panel-table">
+    <table>
+        <thead><tr><th>Логотип</th><th>Название</th><th>Порядок</th><th>Действия</th></tr></thead>
+        <tbody>
+            {% for p in partners %}
+            <tr>
+                <td>{% if p.logo %}<img src="{{ p.logo.url }}" style="height:30px;">{% else %}—{% endif %}</td>
+                <td>{{ p.name }}</td>
+                <td>{{ p.order }}</td>
+                <td>
+                    <a href="{% url 'panel_partner_edit' p.pk %}" class="btn btn--sm btn--primary"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'panel_partner_delete' p.pk %}" class="btn btn--sm btn--danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" style="text-align:center;color:#999;">Нет записей</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

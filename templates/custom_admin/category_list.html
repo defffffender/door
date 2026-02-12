@@ -1,0 +1,31 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block title %}Категории — Панель управления{% endblock %}
+{% block page_title %}Категории{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:16px;">
+    <a href="{% url 'panel_category_create' %}" class="btn btn--primary"><i class="fas fa-plus"></i> Добавить категорию</a>
+</div>
+<div class="panel-table">
+    <table>
+        <thead><tr><th>Изображение</th><th>Название</th><th>Slug</th><th>Порядок</th><th>Действия</th></tr></thead>
+        <tbody>
+            {% for c in categories %}
+            <tr>
+                <td>{% if c.image %}<img src="{{ c.image.url }}" style="height:40px;border-radius:4px;">{% else %}—{% endif %}</td>
+                <td><strong>{{ c.name }}</strong></td>
+                <td style="color:#999;">{{ c.slug }}</td>
+                <td>{{ c.order }}</td>
+                <td>
+                    <a href="{% url 'panel_category_edit' c.pk %}" class="btn btn--sm btn--primary"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'panel_category_delete' c.pk %}" class="btn btn--sm btn--danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center;color:#999;">Нет категорий</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

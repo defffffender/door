@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% if page_seo and page_seo.meta_title %}{{ page_seo.meta_title }}{% else %}{% trans "О компании" %} — {{ site_settings.company_name|default:"Door Company" }}{% endif %}{% endblock %}
+{% if page_seo.meta_description %}{% block meta_description %}{{ page_seo.meta_description }}{% endblock %}{% endif %}
+{% if page_seo.meta_keywords %}{% block meta_keywords %}{{ page_seo.meta_keywords }}{% endblock %}{% endif %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">{% trans "О компании" %}</h1>
+        <div class="breadcrumbs">
+            <a href="{% url 'home' %}">{% trans "Главная" %}</a> / <span>{% trans "О компании" %}</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="about-home">
+            <div class="about-home__text">
+                <p>{{ site_settings.about_text|default:"Мы являемся ведущим производителем стальных дверей в Узбекистане." }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if advantages %}
+<section class="section section--dark">
+    <div class="container">
+        <h2 class="section__title section__title--white">{% trans "Наши преимущества" %}</h2>
+        <div class="advantages-grid">
+            {% for adv in advantages %}
+            <div class="advantage-card">
+                {% if adv.icon %}<div class="advantage-card__icon"><i class="{{ adv.icon }}"></i></div>{% endif %}
+                <h3 class="advantage-card__title">{{ adv.title }}</h3>
+                <p class="advantage-card__desc">{{ adv.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if quality_pillars %}
+<section class="section">
+    <div class="container">
+        <h2 class="section__title">{% trans "Четыре столпа качества" %}</h2>
+        <div class="pillars-grid">
+            {% for pillar in quality_pillars %}
+            <div class="pillar-card">
+                {% if pillar.image %}<div class="pillar-card__image"><img src="{{ pillar.image.url }}" alt="{{ pillar.title }}" loading="lazy"></div>{% endif %}
+                <h3 class="pillar-card__title">{{ pillar.title }}</h3>
+                <p class="pillar-card__desc">{{ pillar.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if statistics %}
+<section class="section section--primary">
+    <div class="container">
+        <div class="stats-grid">
+            {% for stat in statistics %}
+            <div class="stat-card">
+                <div class="stat-card__number">{{ stat.number }}</div>
+                <div class="stat-card__label">{{ stat.label }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if partners %}
+<section class="section">
+    <div class="container">
+        <h2 class="section__title">{% trans "Наши партнёры" %}</h2>
+        <div class="partners-grid">
+            {% for partner in partners %}
+            <div class="partner-logo">
+                {% if partner.logo %}
+                    {% if partner.url %}<a href="{{ partner.url }}" target="_blank" rel="noopener">{% endif %}
+                    <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" loading="lazy">
+                    {% if partner.url %}</a>{% endif %}
+                {% else %}
+                <span style="font-size:14px;font-weight:600;color:#999;">{{ partner.name }}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

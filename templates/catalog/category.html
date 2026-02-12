@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ category.name }} — {{ site_settings.company_name|default:"Door Company" }}{% endblock %}
+{% if category.meta_description %}{% block meta_description %}{{ category.meta_description }}{% endblock %}{% endif %}
+{% if category.meta_keywords %}{% block meta_keywords %}{{ category.meta_keywords }}{% endblock %}{% endif %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">{{ category.name }}</h1>
+        <div class="breadcrumbs">
+            <a href="{% url 'home' %}">{% trans "Главная" %}</a> /
+            <a href="{% url 'catalog' %}">{% trans "Каталог" %}</a> /
+            <span>{{ category.name }}</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        {% if category.description %}<p style="max-width:800px;margin:0 auto 40px;text-align:center;color:#666;">{{ category.description }}</p>{% endif %}
+        <div class="products-grid">
+            {% for product in products %}
+            <a href="{{ product.get_absolute_url }}" class="product-card">
+                {% if product.is_popular %}
+                <span class="product-card__badge product-card__badge--popular">{% trans "Популярное" %}</span>
+                {% endif %}
+                <div class="product-card__image">
+                    {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">{% endif %}
+                </div>
+                <div class="product-card__info">
+                    <p class="product-card__category">{{ category.name }}</p>
+                    <h3 class="product-card__name">{{ product.name }}</h3>
+                    {% if product.price %}<p class="product-card__price"><span>{% trans "от" %}</span> {{ product.price|floatformat:0 }} {% trans "сум" %}</p>{% endif %}
+                </div>
+            </a>
+            {% empty %}
+            <p>{% trans "В этой категории пока нет товаров." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

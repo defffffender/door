@@ -1,0 +1,140 @@
+# Uzbek translations
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: uz\n"
+
+msgid "Каталог"
+msgstr "Katalog"
+
+msgid "О компании"
+msgstr "Kompaniya haqida"
+
+msgid "Новости"
+msgstr "Yangiliklar"
+
+msgid "Наши работы"
+msgstr "Bizning ishlarimiz"
+
+msgid "Контакты"
+msgstr "Kontaktlar"
+
+msgid "Связаться"
+msgstr "Bog'lanish"
+
+msgid "Производитель входных дверей в Ташкенте"
+msgstr "Toshkentda kirish eshiklari ishlab chiqaruvchisi"
+
+msgid "Надёжные входные двери"
+msgstr "Ishonchli kirish eshiklari"
+
+msgid "Производство стальных дверей в Ташкенте"
+msgstr "Toshkentda po'lat eshiklar ishlab chiqarish"
+
+msgid "Связаться с нами"
+msgstr "Biz bilan bog'laning"
+
+msgid "Популярные товары"
+msgstr "Mashhur mahsulotlar"
+
+msgid "сум"
+msgstr "so'm"
+
+msgid "Весь каталог"
+msgstr "Barcha katalog"
+
+msgid "Линейка продукции"
+msgstr "Mahsulotlar qatori"
+
+msgid "Подробнее"
+msgstr "Batafsil"
+
+msgid "Наши преимущества"
+msgstr "Bizning afzalliklarimiz"
+
+msgid "Четыре столпа качества"
+msgstr "Sifatning to'rt ustuni"
+
+msgid "Наши партнёры"
+msgstr "Bizning hamkorlarimiz"
+
+msgid "Свяжитесь с нами"
+msgstr "Biz bilan bog'laning"
+
+msgid "Оставьте заявку и мы свяжемся с вами в ближайшее время"
+msgstr "So'rov qoldiring va biz siz bilan tez orada bog'lanamiz"
+
+msgid "Ваше имя"
+msgstr "Ismingiz"
+
+msgid "Сообщение"
+msgstr "Xabar"
+
+msgid "Отправить заявку"
+msgstr "So'rov yuborish"
+
+msgid "Навигация"
+msgstr "Navigatsiya"
+
+msgid "Все права защищены."
+msgstr "Barcha huquqlar himoyalangan."
+
+msgid "Главная"
+msgstr "Bosh sahifa"
+
+msgid "Каталог продукции"
+msgstr "Mahsulotlar katalogi"
+
+msgid "Каталог пока пуст."
+msgstr "Katalog hali bo'sh."
+
+msgid "В этой категории пока нет товаров."
+msgstr "Bu kategoriyada hali mahsulot yo'q."
+
+msgid "Заказать"
+msgstr "Buyurtma berish"
+
+msgid "Новостей пока нет."
+msgstr "Hali yangiliklar yo'q."
+
+msgid "Проектов пока нет."
+msgstr "Hali loyihalar yo'q."
+
+msgid "Все проекты"
+msgstr "Barcha loyihalar"
+
+msgid "Телефон"
+msgstr "Telefon"
+
+msgid "Адрес"
+msgstr "Manzil"
+
+msgid "Время работы"
+msgstr "Ish vaqti"
+
+msgid "Пн-Сб: 09:00 - 18:00"
+msgstr "Du-Sha: 09:00 - 18:00"
+
+msgid "Оставить заявку"
+msgstr "So'rov qoldirish"
+
+msgid "Отправить"
+msgstr "Yuborish"
+
+msgid "Откройте дверь в безопасное будущее"
+msgstr "Xavfsiz kelajakka eshik oching"
+
+msgid "Производство и установка стальных дверей в Ташкенте. Надёжность, качество, индивидуальный подход."
+msgstr "Toshkentda po'lat eshiklar ishlab chiqarish va o'rnatish. Ishonchlilik, sifat, individual yondashuv."
+
+msgid "Популярное"
+msgstr "Mashhur"
+
+msgid "от"
+msgstr "dan"
+
+msgid "Почему клиенты выбирают нас"
+msgstr "Mijozlar bizni nima uchun tanlaydi"
+
+msgid "Скачать каталог"
+msgstr "Katalogni yuklab olish"

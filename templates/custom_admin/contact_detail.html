@@ -1,0 +1,44 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block title %}Заявка #{{ contact.pk }} — Панель управления{% endblock %}
+{% block page_title %}Заявка #{{ contact.pk }}{% endblock %}
+
+{% block content %}
+<div class="panel-form">
+    <div class="detail-row">
+        <span class="detail-row__label">Имя:</span>
+        <span class="detail-row__value">{{ contact.name }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-row__label">Телефон:</span>
+        <span class="detail-row__value"><a href="tel:{{ contact.phone }}">{{ contact.phone }}</a></span>
+    </div>
+    {% if contact.email %}
+    <div class="detail-row">
+        <span class="detail-row__label">Email:</span>
+        <span class="detail-row__value"><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></span>
+    </div>
+    {% endif %}
+    <div class="detail-row">
+        <span class="detail-row__label">Сообщение:</span>
+        <span class="detail-row__value">{{ contact.message|default:"—"|linebreaksbr }}</span>
+    </div>
+    {% if contact.file %}
+    <div class="detail-row">
+        <span class="detail-row__label">Файл:</span>
+        <span class="detail-row__value"><a href="{{ contact.file.url }}" target="_blank"><i class="fas fa-download"></i> Скачать</a></span>
+    </div>
+    {% endif %}
+    <div class="detail-row">
+        <span class="detail-row__label">Дата:</span>
+        <span class="detail-row__value">{{ contact.created_at|date:"d.m.Y H:i" }}</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-row__label">Статус:</span>
+        <span class="detail-row__value"><span style="color:#1e8e3e;">Прочитано</span></span>
+    </div>
+    <div class="form-actions" style="margin-top:20px;">
+        <a href="{% url 'panel_contacts' %}" class="btn btn--outline"><i class="fas fa-arrow-left"></i> Назад к списку</a>
+    </div>
+</div>
+{% endblock %}

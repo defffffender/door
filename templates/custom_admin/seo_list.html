@@ -1,0 +1,24 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block title %}SEO страниц — Панель управления{% endblock %}
+{% block page_title %}SEO страниц{% endblock %}
+
+{% block content %}
+<div class="panel-table">
+    <table>
+        <thead><tr><th>Страница</th><th>SEO Title</th><th>SEO Description</th><th>Действия</th></tr></thead>
+        <tbody>
+            {% for seo in seo_entries %}
+            <tr>
+                <td><strong>{{ seo.get_page_display }}</strong></td>
+                <td>{{ seo.meta_title|default:"—"|truncatechars:50 }}</td>
+                <td>{{ seo.meta_description|default:"—"|truncatechars:60 }}</td>
+                <td><a href="{% url 'panel_seo_edit' seo.pk %}" class="btn btn--sm btn--primary"><i class="fas fa-edit"></i></a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" style="text-align:center;color:#999;">Нет записей. Создайте SEO-записи для страниц.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

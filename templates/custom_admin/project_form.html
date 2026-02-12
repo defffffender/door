@@ -1,0 +1,41 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block title %}{% if object %}Редактировать{% else %}Добавить{% endif %} проект — Панель управления{% endblock %}
+{% block page_title %}{% if object %}Редактировать{% else %}Добавить{% endif %} проект{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="panel-form">
+    {% csrf_token %}
+    {% for field in form %}
+    {% if field.name == 'meta_title' %}
+    <h3 class="form-section-title"><i class="fas fa-search"></i> SEO настройки</h3>
+    {% endif %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<div class="form-error">{{ field.errors.0 }}</div>{% endif %}
+    </div>
+    {% endfor %}
+
+    <h3 class="form-section-title"><i class="fas fa-images"></i> Дополнительные изображения</h3>
+    {% if object and object.images.all %}
+    <div class="image-gallery-admin">
+        {% for img in object.images.all %}
+        <div class="image-gallery-admin__item">
+            <img src="{{ img.image.url }}" style="height:80px;border-radius:4px;">
+            <label><input type="checkbox" name="delete_images" value="{{ img.pk }}"> Удалить</label>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="form-group">
+        <label>Загрузить изображения</label>
+        <input type="file" name="images" class="form-control" multiple accept="image/*">
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn--primary"><i class="fas fa-save"></i> Сохранить</button>
+        <a href="{% url 'panel_project_list' %}" class="btn btn--outline">Отмена</a>
+    </div>
+</form>
+{% endblock %}

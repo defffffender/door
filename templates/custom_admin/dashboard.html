@@ -1,0 +1,53 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block title %}Дашборд — Панель управления{% endblock %}
+{% block page_title %}Дашборд{% endblock %}
+
+{% block content %}
+<div class="stats-cards">
+    <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--blue"><i class="fas fa-door-open"></i></div>
+        <div class="stat-card__number">{{ product_count }}</div>
+        <div class="stat-card__label">Товаров</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--green"><i class="fas fa-folder"></i></div>
+        <div class="stat-card__number">{{ category_count }}</div>
+        <div class="stat-card__label">Категорий</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--orange"><i class="fas fa-newspaper"></i></div>
+        <div class="stat-card__number">{{ article_count }}</div>
+        <div class="stat-card__label">Новостей</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--purple"><i class="fas fa-briefcase"></i></div>
+        <div class="stat-card__number">{{ project_count }}</div>
+        <div class="stat-card__label">Проектов</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--red"><i class="fas fa-envelope"></i></div>
+        <div class="stat-card__number">{{ unread_contacts_count }}</div>
+        <div class="stat-card__label">Новых заявок</div>
+    </div>
+</div>
+
+{% if recent_contacts %}
+<h3 style="margin-bottom:12px;font-size:16px;font-weight:600;">Последние заявки</h3>
+<div class="panel-table">
+    <table>
+        <thead><tr><th>Имя</th><th>Телефон</th><th>Дата</th><th>Статус</th></tr></thead>
+        <tbody>
+            {% for c in recent_contacts %}
+            <tr>
+                <td><a href="{% url 'panel_contact_detail' c.pk %}" style="color:#1a73e8;">{{ c.name }}</a></td>
+                <td>{{ c.phone }}</td>
+                <td>{{ c.created_at|date:"d.m.Y H:i" }}</td>
+                <td>{% if c.is_read %}<span style="color:#1e8e3e;">Прочитано</span>{% else %}<span style="color:#d93025;font-weight:500;">Новая</span>{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

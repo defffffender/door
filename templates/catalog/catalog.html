@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% if page_seo and page_seo.meta_title %}{{ page_seo.meta_title }}{% else %}{% trans "Каталог" %} — {{ site_settings.company_name|default:"Door Company" }}{% endif %}{% endblock %}
+{% if page_seo.meta_description %}{% block meta_description %}{{ page_seo.meta_description }}{% endblock %}{% endif %}
+{% if page_seo.meta_keywords %}{% block meta_keywords %}{{ page_seo.meta_keywords }}{% endblock %}{% endif %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">{% trans "Каталог продукции" %}</h1>
+        <div class="breadcrumbs">
+            <a href="{% url 'home' %}">{% trans "Главная" %}</a> / <span>{% trans "Каталог" %}</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="categories-grid">
+            {% for category in categories %}
+            <a href="{{ category.get_absolute_url }}" class="category-card">
+                <div class="category-card__image">
+                    {% if category.image %}<img src="{{ category.image.url }}" alt="{{ category.name }}" loading="lazy">{% endif %}
+                </div>
+                <div class="category-card__overlay"></div>
+                <h3 class="category-card__name">{{ category.name }}</h3>
+            </a>
+            {% empty %}
+            <p>{% trans "Каталог пока пуст." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

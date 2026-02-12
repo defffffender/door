@@ -1,0 +1,72 @@
+{% load static i18n %}
+<footer class="footer">
+    {% if site_settings.map_embed %}
+    <div class="container">
+        <div class="footer__map">
+            {{ site_settings.map_embed|safe }}
+        </div>
+    </div>
+    {% endif %}
+    <div class="container" style="margin-top:48px;">
+        <div class="footer__inner">
+            <div class="footer__col">
+                <a href="{% url 'home' %}" class="footer-logo">
+                    {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.company_name }}">
+                    {% else %}
+                    <span class="logo-text">{{ site_settings.company_name|default:"DOOR" }}</span>
+                    {% endif %}
+                </a>
+                <p class="footer__desc">{{ site_settings.slogan|default:"Производство и установка стальных дверей в Ташкенте" }}</p>
+                <div class="footer__social">
+                    {% if site_settings.telegram_url %}
+                    <a href="{{ site_settings.telegram_url }}" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>
+                    {% endif %}
+                    {% if site_settings.instagram_url %}
+                    <a href="{{ site_settings.instagram_url }}" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="footer__col">
+                <h4 class="footer__title">{% trans "Навигация" %}</h4>
+                <ul class="footer__links">
+                    <li><a href="{% url 'home' %}">{% trans "Главная" %}</a></li>
+                    <li><a href="{% url 'catalog' %}">{% trans "Каталог" %}</a></li>
+                    <li><a href="{% url 'about' %}">{% trans "О компании" %}</a></li>
+                    <li><a href="{% url 'news_list' %}">{% trans "Новости" %}</a></li>
+                    <li><a href="{% url 'portfolio_list' %}">{% trans "Наши работы" %}</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4 class="footer__title">{% trans "Контакты" %}</h4>
+                <ul class="footer__contacts">
+                    {% if site_settings.phone %}
+                    <li><i class="fas fa-phone"></i> <a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a></li>
+                    {% endif %}
+                    {% if site_settings.phone2 %}
+                    <li><i class="fas fa-phone"></i> <a href="tel:{{ site_settings.phone2 }}">{{ site_settings.phone2 }}</a></li>
+                    {% endif %}
+                    {% if site_settings.email %}
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4 class="footer__title">{% trans "Адрес" %}</h4>
+                <ul class="footer__contacts">
+                    {% if site_settings.address %}
+                    <li><i class="fas fa-map-marker-alt"></i> <span>{{ site_settings.address }}</span></li>
+                    {% endif %}
+                    <li><i class="fas fa-clock"></i> <span>{% trans "Пн-Сб: 09:00 - 18:00" %}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; {% now "Y" %} {{ site_settings.company_name|default:"Door Company" }}. {% trans "Все права защищены." %}</p>
+            <div class="footer__bottom-links">
+                <a href="{% url 'contacts' %}">{% trans "Контакты" %}</a>
+                <a href="{% url 'catalog' %}">{% trans "Каталог" %}</a>
+            </div>
+        </div>
+    </div>
+</footer>

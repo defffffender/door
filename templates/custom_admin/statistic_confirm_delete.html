@@ -1,0 +1,17 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block title %}Удалить статистику — Панель управления{% endblock %}
+{% block page_title %}Удалить статистику{% endblock %}
+
+{% block content %}
+<div class="panel-form">
+    <p style="margin-bottom:20px;">Вы действительно хотите удалить <strong>«{{ object }}»</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn--danger"><i class="fas fa-trash"></i> Удалить</button>
+            <a href="{% url 'panel_statistic_list' %}" class="btn btn--outline">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

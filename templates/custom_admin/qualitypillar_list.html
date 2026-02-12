@@ -1,0 +1,30 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block title %}Столпы качества — Панель управления{% endblock %}
+{% block page_title %}Столпы качества{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:16px;">
+    <a href="{% url 'panel_qualitypillar_create' %}" class="btn btn--primary"><i class="fas fa-plus"></i> Добавить</a>
+</div>
+<div class="panel-table">
+    <table>
+        <thead><tr><th>Изображение</th><th>Заголовок</th><th>Порядок</th><th>Действия</th></tr></thead>
+        <tbody>
+            {% for p in pillars %}
+            <tr>
+                <td>{% if p.image %}<img src="{{ p.image.url }}" style="height:40px;border-radius:4px;">{% else %}—{% endif %}</td>
+                <td>{{ p.title }}</td>
+                <td>{{ p.order }}</td>
+                <td>
+                    <a href="{% url 'panel_qualitypillar_edit' p.pk %}" class="btn btn--sm btn--primary"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'panel_qualitypillar_delete' p.pk %}" class="btn btn--sm btn--danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" style="text-align:center;color:#999;">Нет записей</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

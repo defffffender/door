@@ -1,0 +1,87 @@
+{% load static i18n %}
+<header class="header">
+    <div class="header-top">
+        <div class="container">
+            <div class="header-top__inner">
+                <div class="header-top__contacts">
+                    {% if site_settings.phone %}
+                    <a href="tel:{{ site_settings.phone }}" class="header-phone">
+                        <i class="fas fa-phone"></i> {{ site_settings.phone }}
+                    </a>
+                    {% endif %}
+                    {% if site_settings.email %}
+                    <a href="mailto:{{ site_settings.email }}" class="header-phone" style="margin-left:16px;">
+                        <i class="fas fa-envelope"></i> {{ site_settings.email }}
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="header-top__actions">
+                    <div class="social-links">
+                        {% if site_settings.telegram_url %}
+                        <a href="{{ site_settings.telegram_url }}" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>
+                        {% endif %}
+                        {% if site_settings.instagram_url %}
+                        <a href="{{ site_settings.instagram_url }}" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="lang-switcher">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                        <a href="{% url 'switch_language' lang_code=lang_code %}?next={{ request.path }}"
+                            class="lang-btn {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
+                            {{ lang_code|upper }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-main">
+        <div class="container">
+            <div class="header-main__inner">
+                <a href="{% url 'home' %}" class="logo">
+                    {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.company_name }}">
+                    {% else %}
+                    <span class="logo-text">{{ site_settings.company_name|default:"DOOR" }}</span>
+                    {% endif %}
+                </a>
+                <nav class="nav" id="mainNav">
+                    <ul class="nav__list">
+                        <li><a href="{% url 'catalog' %}" class="nav__link">{% trans "Каталог" %}</a></li>
+                        <li><a href="{% url 'about' %}" class="nav__link">{% trans "О компании" %}</a></li>
+                        <li><a href="{% url 'news_list' %}" class="nav__link">{% trans "Новости" %}</a></li>
+                        <li><a href="{% url 'portfolio_list' %}" class="nav__link">{% trans "Наши работы" %}</a></li>
+                        <li><a href="{% url 'contacts' %}" class="nav__link">{% trans "Контакты" %}</a></li>
+                    </ul>
+                    <div class="mobile-nav-extras">
+                        {% if site_settings.phone %}
+                        <a href="tel:{{ site_settings.phone }}" class="mobile-nav-phone">
+                            <i class="fas fa-phone"></i> {{ site_settings.phone }}
+                        </a>
+                        {% endif %}
+                        <div class="mobile-lang-switcher">
+                            {% for lang_code, lang_name in LANGUAGES %}
+                            <a href="{% url 'switch_language' lang_code=lang_code %}?next={{ request.path }}"
+                                class="lang-btn {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
+                                {{ lang_code|upper }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </nav>
+                {% if site_settings.phone %}
+                <a href="tel:{{ site_settings.phone }}" class="header-main__phone">
+                    <i class="fas fa-phone"></i> {{ site_settings.phone }}
+                </a>
+                {% endif %}
+                <a href="{% url 'contacts' %}" class="btn btn--primary header-cta">{% trans "Связаться" %}</a>
+                <button class="burger" id="burgerBtn" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
