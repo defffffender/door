@@ -15,7 +15,18 @@ def catalog(request):
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = category.products.all()
-    return render(request, 'catalog/category.html', {'category': category, 'products': products})
+    sort = request.GET.get('sort', '')
+    if sort == 'price_asc':
+        products = products.order_by('price')
+    elif sort == 'price_desc':
+        products = products.order_by('-price')
+    elif sort == 'popular':
+        products = products.order_by('-is_popular', 'order')
+    elif sort == 'name':
+        products = products.order_by('name')
+    return render(request, 'catalog/category.html', {
+        'category': category, 'products': products, 'current_sort': sort,
+    })
 
 
 def product_detail(request, category_slug, slug):

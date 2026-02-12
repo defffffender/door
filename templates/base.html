@@ -23,6 +23,18 @@
 
     {% include 'includes/footer.html' %}
 
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        {% if site_settings.telegram_url %}
+        <a href="{{ site_settings.telegram_url }}" target="_blank" rel="noopener" class="floating-btn floating-btn--telegram" title="Telegram">
+            <i class="fab fa-telegram"></i>
+        </a>
+        {% endif %}
+        <button class="floating-btn floating-btn--top" id="backToTop" title="{% trans 'Наверх' %}">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+    </div>
+
     <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>

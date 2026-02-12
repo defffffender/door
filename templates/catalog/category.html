@@ -20,6 +20,21 @@
 <section class="section">
     <div class="container">
         {% if category.description %}<p style="max-width:800px;margin:0 auto 40px;text-align:center;color:#666;">{{ category.description }}</p>{% endif %}
+        <div class="catalog-toolbar">
+            <div class="catalog-search">
+                <i class="fas fa-search catalog-search__icon"></i>
+                <input type="text" id="catalogSearch" class="catalog-search__input" placeholder="{% trans 'Поиск товаров...' %}">
+            </div>
+            <div class="catalog-sort">
+                <select id="catalogSort">
+                    <option value="">{% trans "Сортировка" %}</option>
+                    <option value="price_asc" {% if current_sort == 'price_asc' %}selected{% endif %}>{% trans "Цена: по возрастанию" %}</option>
+                    <option value="price_desc" {% if current_sort == 'price_desc' %}selected{% endif %}>{% trans "Цена: по убыванию" %}</option>
+                    <option value="popular" {% if current_sort == 'popular' %}selected{% endif %}>{% trans "Сначала популярные" %}</option>
+                    <option value="name" {% if current_sort == 'name' %}selected{% endif %}>{% trans "По названию" %}</option>
+                </select>
+            </div>
+        </div>
         <div class="products-grid">
             {% for product in products %}
             <a href="{{ product.get_absolute_url }}" class="product-card">

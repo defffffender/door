@@ -39,6 +39,10 @@ def about(request):
     return render(request, 'core/about.html', context)
 
 
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
+
 def switch_language(request, lang_code):
     if lang_code not in dict(settings.LANGUAGES):
         lang_code = settings.LANGUAGE_CODE

@@ -138,3 +138,51 @@ msgstr "Mijozlar bizni nima uchun tanlaydi"
 
 msgid "Скачать каталог"
 msgstr "Katalogni yuklab olish"
+
+msgid "Наверх"
+msgstr "Yuqoriga"
+
+msgid "Страница не найдена"
+msgstr "Sahifa topilmadi"
+
+msgid "К сожалению, запрашиваемая страница не существует или была перемещена."
+msgstr "Afsuski, so'ralgan sahifa mavjud emas yoki ko'chirilgan."
+
+msgid "На главную"
+msgstr "Bosh sahifaga"
+
+msgid "Дверь не найдена"
+msgstr "Eshik topilmadi"
+
+msgid "ДВЕРЬ НЕ НАЙДЕНА"
+msgstr "ESHIK TOPILMADI"
+
+msgid "Вы сошли с пути. Мы покажем выход."
+msgstr "Siz yo'ldan adashdingiz. Biz chiqishni ko'rsatamiz."
+
+msgid "Вернуться на главную"
+msgstr "Bosh sahifaga qaytish"
+
+msgid "Коллекции дверей"
+msgstr "Eshiklar kolleksiyasi"
+
+msgid "Индивидуальный заказ"
+msgstr "Individual buyurtma"
+
+msgid "Поиск товаров..."
+msgstr "Mahsulotlarni qidirish..."
+
+msgid "Сортировка"
+msgstr "Saralash"
+
+msgid "Цена: по возрастанию"
+msgstr "Narx: o'sish tartibida"
+
+msgid "Цена: по убыванию"
+msgstr "Narx: kamayish tartibida"
+
+msgid "Сначала популярные"
+msgstr "Avval mashhurlar"
+
+msgid "По названию"
+msgstr "Nomi bo'yicha"
