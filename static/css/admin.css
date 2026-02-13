@@ -77,7 +77,20 @@ select.form-control { appearance: auto; }
 .form-section__title { font-size: 15px; font-weight: 600; color: #1a3a5c; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
 .form-actions { display: flex; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
 .form-help { font-size: 12px; color: #888; margin-top: 4px; }
+.form-hint { font-size: 12px; color: #888; margin-top: 4px; }
 .form-error { color: #d93025; font-size: 12px; margin-top: 4px; }
+
+/* Settings section titles */
+.settings-section-title { font-size: 17px; font-weight: 600; color: #1a2332; margin: 28px 0 16px; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb; display: flex; align-items: center; gap: 10px; }
+.settings-section-title:first-of-type { margin-top: 0; }
+.settings-section-title i { color: #4a9eff; }
+
+/* Theme color grid */
+.theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.form-group--color { background: #f8f9fb; border-radius: 8px; padding: 14px; }
+.color-picker-wrap { display: flex; align-items: center; gap: 10px; }
+.form-control-color { width: 48px; height: 38px; padding: 2px; border: 1px solid #d5d5d5; border-radius: 6px; cursor: pointer; flex-shrink: 0; }
+.color-value { font-family: monospace; font-size: 13px; color: #666; }
 .form-thumb { width: 80px; height: 80px; border-radius: 6px; object-fit: cover; margin-bottom: 8px; }
 .form-check { display: flex; align-items: center; gap: 8px; }
 .form-check input { width: 16px; height: 16px; }

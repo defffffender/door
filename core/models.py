@@ -45,6 +45,20 @@ class SiteSettings(models.Model):
     telegram_bot_token = models.CharField('Telegram Bot Token', max_length=200, blank=True, help_text='Токен бота от @BotFather')
     telegram_chat_id = models.CharField('Telegram Chat ID', max_length=100, blank=True, help_text='ID чата/группы для уведомлений')
 
+    # Theme
+    theme_primary = models.CharField('Основной цвет', max_length=20, default='#1b4f8a', help_text='Кнопки, ссылки, акценты')
+    theme_primary_hover = models.CharField('Основной (ховер)', max_length=20, default='#153f6e')
+    theme_dark = models.CharField('Тёмный цвет', max_length=20, default='#1a2d45', help_text='Хедер, тёмные секции')
+    theme_accent = models.CharField('Светлый акцент', max_length=20, default='#8ab4e8', help_text='Иконки, подсветки')
+    theme_bg_light = models.CharField('Светлый фон', max_length=20, default='#f5f7fa', help_text='Фон секций')
+    theme_bg_accent = models.CharField('Акцентный фон', max_length=20, default='#f8fafe')
+    theme_text = models.CharField('Цвет текста', max_length=20, default='#333333')
+    theme_text_light = models.CharField('Вторичный текст', max_length=20, default='#777777')
+    theme_success = models.CharField('Цвет успеха', max_length=20, default='#1b8a4b')
+    theme_danger = models.CharField('Цвет ошибки', max_length=20, default='#e8433e')
+    theme_warning = models.CharField('Цвет предупреждения', max_length=20, default='#f5a623', help_text='Бейджи "Популярное"')
+    theme_font = models.CharField('Шрифт', max_length=100, default='Inter', help_text='Название Google Fonts шрифта')
+
     class Meta:
         verbose_name = 'Настройки сайта'
         verbose_name_plural = 'Настройки сайта'

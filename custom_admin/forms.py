@@ -23,6 +23,7 @@ CHECKBOX = forms.CheckboxInput(attrs={'class': 'form-check-input'})
 FILE_INPUT = forms.ClearableFileInput(attrs={'class': 'form-control'})
 URL_INPUT = forms.URLInput(attrs={'class': 'form-control'})
 EMAIL_INPUT = forms.EmailInput(attrs={'class': 'form-control'})
+COLOR_INPUT = forms.TextInput(attrs={'class': 'form-control form-control-color', 'type': 'color'})
 
 
 def _seo_widgets():
@@ -46,6 +47,12 @@ class SiteSettingsForm(forms.ModelForm):
             'phone', 'phone2', 'email', 'address',
             'telegram_url', 'instagram_url', 'map_embed', 'catalog_pdf',
             'telegram_bot_token', 'telegram_chat_id',
+            # Theme
+            'theme_primary', 'theme_primary_hover', 'theme_dark', 'theme_accent',
+            'theme_bg_light', 'theme_bg_accent',
+            'theme_text', 'theme_text_light',
+            'theme_success', 'theme_danger', 'theme_warning',
+            'theme_font',
         ]
         widgets = {
             'logo': FILE_INPUT,
@@ -62,6 +69,19 @@ class SiteSettingsForm(forms.ModelForm):
             'catalog_pdf': FILE_INPUT,
             'telegram_bot_token': TEXT_INPUT,
             'telegram_chat_id': TEXT_INPUT,
+            # Theme
+            'theme_primary': COLOR_INPUT,
+            'theme_primary_hover': COLOR_INPUT,
+            'theme_dark': COLOR_INPUT,
+            'theme_accent': COLOR_INPUT,
+            'theme_bg_light': COLOR_INPUT,
+            'theme_bg_accent': COLOR_INPUT,
+            'theme_text': COLOR_INPUT,
+            'theme_text_light': COLOR_INPUT,
+            'theme_success': COLOR_INPUT,
+            'theme_danger': COLOR_INPUT,
+            'theme_warning': COLOR_INPUT,
+            'theme_font': TEXT_INPUT,
         }
 
 
