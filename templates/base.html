@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>{% block title %}{{ site_settings.company_name|default:"Door Company" }}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ site_settings.slogan|default:"Производитель входных дверей в Ташкенте" }}{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}двери, входные двери, стальные двери, Ташкент, производство дверей{% endblock %}">
@@ -46,12 +47,31 @@
             <i class="fab fa-telegram"></i>
         </a>
         {% endif %}
+        <button class="floating-btn floating-btn--chat" id="chatWidgetBtn" title="{% trans 'Чат' %}">
+            <i class="fas fa-comments"></i>
+        </button>
         <button class="floating-btn floating-btn--top" id="backToTop" title="{% trans 'Наверх' %}">
             <i class="fas fa-chevron-up"></i>
         </button>
     </div>
 
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-widget__header">
+            <div class="chat-widget__title">
+                <i class="fas fa-robot"></i>
+                <span>{% trans 'Помощник' %}</span>
+            </div>
+            <button class="chat-widget__close" id="chatCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chat-widget__messages" id="chatMessages"></div>
+        <div class="chat-widget__input" id="chatInputArea"></div>
+    </div>
+
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/chat-widget.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
