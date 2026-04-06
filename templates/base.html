@@ -10,22 +10,23 @@
     <meta name="keywords" content="{% block meta_keywords %}двери, входные двери, стальные двери, Ташкент, производство дверей{% endblock %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family={{ site_settings.theme_font|default:'Inter' }}:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family={{ site_settings.theme_font|default:'Noto+Sans' }}:wght@300;400;500;600;700;800&family=Philosopher:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
     :root {
-        --color-primary: {{ site_settings.theme_primary|default:"#1b4f8a" }};
-        --color-primary-hover: {{ site_settings.theme_primary_hover|default:"#153f6e" }};
-        --color-dark: {{ site_settings.theme_dark|default:"#1a2d45" }};
-        --color-accent: {{ site_settings.theme_accent|default:"#8ab4e8" }};
-        --color-bg-light: {{ site_settings.theme_bg_light|default:"#f5f7fa" }};
-        --color-bg-accent: {{ site_settings.theme_bg_accent|default:"#f8fafe" }};
-        --color-text: {{ site_settings.theme_text|default:"#333333" }};
-        --color-text-light: {{ site_settings.theme_text_light|default:"#777777" }};
-        --color-success: {{ site_settings.theme_success|default:"#1b8a4b" }};
-        --color-danger: {{ site_settings.theme_danger|default:"#e8433e" }};
-        --color-warning: {{ site_settings.theme_warning|default:"#f5a623" }};
-        --font-primary: '{{ site_settings.theme_font|default:"Inter" }}', -apple-system, BlinkMacSystemFont, sans-serif;
+        --color-primary: {{ site_settings.theme_primary|default:"#EF233C" }};
+        --color-primary-hover: {{ site_settings.theme_primary_hover|default:"#D80032" }};
+        --color-dark: {{ site_settings.theme_dark|default:"#2B2D42" }};
+        --color-accent: {{ site_settings.theme_accent|default:"#F45467" }};
+        --color-bg-light: {{ site_settings.theme_bg_light|default:"#EDF2F4" }};
+        --color-bg-accent: {{ site_settings.theme_bg_accent|default:"#E3E7ED" }};
+        --color-text: {{ site_settings.theme_text|default:"#2B2D42" }};
+        --color-text-light: {{ site_settings.theme_text_light|default:"#8D99AE" }};
+        --color-success: {{ site_settings.theme_success|default:"#2E7D32" }};
+        --color-danger: {{ site_settings.theme_danger|default:"#D80032" }};
+        --color-warning: {{ site_settings.theme_warning|default:"#F9A825" }};
+        --font-primary: '{{ site_settings.theme_font|default:"Noto Sans" }}', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-heading: 'Philosopher', Georgia, serif;
     }
     </style>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">

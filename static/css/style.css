@@ -1,17 +1,30 @@
 /* ============================================================
-   Door Company — Frontend Styles (dacros.uz inspired)
+   STAELDI — Frontend Styles
+   Brand: Electric Red #EF233C + Wet Asphalt #2B2D42
+   Fonts: Philosopher (headings) + Noto Sans (body)
    ============================================================ */
 
 /* === Reset & Base === */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-    font-family: var(--font-primary, 'Inter', -apple-system, BlinkMacSystemFont, sans-serif);
-    font-size: 16px; line-height: 1.6; color: var(--color-text, #333); background: #fff;
+    font-family: var(--font-primary, 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif);
+    font-size: 16px; line-height: 1.6; color: var(--color-text, #2B2D42); background: #fff;
 }
 a { text-decoration: none; color: inherit; transition: color .2s; }
 img { max-width: 100%; height: auto; display: block; }
 ul { list-style: none; }
+
+/* === Brand Heading Font === */
+h1, h2, h3, h4, h5, h6,
+.slider__title, .section__title, .page-header__title,
+.product-info__name, .category-card__name,
+.advantage-card__title, .pillar-card__title,
+.stat-item__number, .portfolio-card__title,
+.news-card__title, .error-page__title,
+.logo-text {
+    font-family: var(--font-heading, 'Philosopher', Georgia, serif);
+}
 
 /* === Container === */
 .container { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
