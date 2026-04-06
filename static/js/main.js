@@ -7,7 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const nav = document.getElementById('mainNav');
     let overlay = document.createElement('div');
     overlay.className = 'nav-overlay';
-    document.body.appendChild(overlay);
+    // Insert overlay inside header to share stacking context with nav
+    const header = document.querySelector('.header');
+    if (header) {
+        header.appendChild(overlay);
+    } else {
+        document.body.appendChild(overlay);
+    }
 
     function closeMenu() {
         burger.classList.remove('active');

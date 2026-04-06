@@ -8,6 +8,15 @@
     <title>{% block title %}{{ site_settings.company_name|default:"Door Company" }}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ site_settings.slogan|default:"Производитель входных дверей в Ташкенте" }}{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}двери, входные двери, стальные двери, Ташкент, производство дверей{% endblock %}">
+    <link rel="canonical" href="https://staeldi.uz{{ request.path }}">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ site_settings.company_name|default:'STAELDI' }}">
+    <meta property="og:title" content="{% block og_title %}{{ site_settings.company_name|default:'STAELDI' }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site_settings.slogan|default:'Двери в Ташкенте' }}{% endblock %}">
+    <meta property="og:url" content="https://staeldi.uz{{ request.path }}">
+    <meta property="og:locale" content="{{ LANGUAGE_CODE }}">
+    {% block og_image %}{% if site_settings.logo %}<meta property="og:image" content="https://staeldi.uz{{ site_settings.logo.url }}">{% endif %}{% endblock %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family={{ site_settings.theme_font|default:'Noto+Sans' }}:wght@300;400;500;600;700;800&family=Philosopher:wght@400;700&display=swap" rel="stylesheet">

@@ -87,8 +87,8 @@ h1, h2, h3, h4, h5, h6,
     height: 72px; gap: 20px;
 }
 .logo { display: flex; align-items: center; flex-shrink: 0; }
-.logo img { height: 48px; width: auto; }
-.logo-text { font-size: 26px; font-weight: 800; color: var(--color-primary); letter-spacing: 3px; text-transform: uppercase; }
+.logo img { height: 64px; width: auto; }
+.logo-text { font-size: 30px; font-weight: 800; color: var(--color-primary); letter-spacing: 3px; text-transform: uppercase; }
 
 /* Navigation */
 .nav { flex: 1; display: flex; justify-content: center; }
@@ -780,8 +780,10 @@ textarea.form-input { resize: vertical; min-height: 100px; }
     .nav.active { left: 0; }
     .nav__list { flex-direction: column; gap: 0; margin-top: 48px; }
     .nav__link { display: block; padding: 14px 0; font-size: 16px; border-bottom: 1px solid #f0f0f0; border-radius: 0; }
-    .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 150; display: none; }
+    .header { z-index: 300; }
+    .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 199; display: none; cursor: pointer; }
     .nav-overlay.active { display: block; }
+    .nav { z-index: 200; }
 
     /* Mobile nav extras: phone + lang switcher */
     .mobile-nav-extras { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; padding-top: 24px; border-top: 1px solid #eee; }
@@ -903,7 +905,8 @@ textarea.form-input { resize: vertical; min-height: 100px; }
     .page-header { padding: 32px 0; }
     .page-header__title { font-size: 22px; }
     .header-main__inner { height: 52px; }
-    .logo-text { font-size: 18px; }
+    .logo-text { font-size: 20px; }
+    .logo img { height: 48px; }
     .stat-item__number { font-size: 26px; }
     .stat-item__label { font-size: 12px; }
     .contacts-form { padding: 18px; border-radius: 12px; }

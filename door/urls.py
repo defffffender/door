@@ -3,9 +3,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
-from core.views import switch_language
+from core.views import switch_language, robots_txt, sitemap_xml
 
 urlpatterns = [
+    path('robots.txt', robots_txt, name='robots_txt'),
+    path('sitemap.xml', sitemap_xml, name='sitemap_xml'),
     path('i18n/', include('django.conf.urls.i18n')),
     path('lang/<str:lang_code>/', switch_language, name='switch_language'),
 ]
