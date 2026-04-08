@@ -43,7 +43,7 @@ class SiteSettingsForm(forms.ModelForm):
     class Meta:
         model = SiteSettings
         fields = [
-            'logo', 'company_name', 'slogan', 'about_text',
+            'logo', 'favicon', 'company_name', 'slogan', 'about_text',
             'phone', 'phone2', 'email', 'address',
             'telegram_url', 'instagram_url', 'map_embed', 'catalog_pdf',
             'telegram_bot_token', 'telegram_chat_id',
@@ -56,6 +56,7 @@ class SiteSettingsForm(forms.ModelForm):
         ]
         widgets = {
             'logo': FILE_INPUT,
+            'favicon': FILE_INPUT,
             'company_name': TEXT_INPUT,
             'slogan': TEXT_INPUT,
             'about_text': TEXTAREA,

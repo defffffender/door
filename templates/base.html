@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token }}">
+    {% if site_settings.favicon %}<link rel="icon" href="{{ site_settings.favicon.url }}" type="image/png">{% endif %}
     <title>{% block title %}{{ site_settings.company_name|default:"Door Company" }}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ site_settings.slogan|default:"Производитель входных дверей в Ташкенте" }}{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}двери, входные двери, стальные двери, Ташкент, производство дверей{% endblock %}">

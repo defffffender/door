@@ -31,6 +31,7 @@ class PageSeo(SeoMixin):
 
 class SiteSettings(models.Model):
     logo = models.ImageField('Логотип', upload_to='settings/', blank=True)
+    favicon = models.ImageField('Фавиконка', upload_to='settings/', blank=True, help_text='Иконка сайта (ICO, PNG, 32x32 или 64x64)')
     company_name = models.CharField('Название компании', max_length=200, default='Door Company')
     slogan = models.CharField('Слоган', max_length=300, blank=True)
     about_text = models.TextField('О компании (краткое)', blank=True)
