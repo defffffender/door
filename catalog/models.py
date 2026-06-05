@@ -1,5 +1,6 @@
 from django.db import models
 from core.models import SeoMixin
+from core.utils import unique_slugify
 
 
 class Category(SeoMixin):
@@ -16,6 +17,11 @@ class Category(SeoMixin):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, self.name)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return f'/catalog/{self.slug}/'
@@ -39,6 +45,11 @@ class Product(SeoMixin):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, self.name)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return f'/catalog/{self.category.slug}/{self.slug}/'

@@ -35,6 +35,22 @@ def _seo_widgets():
     }
 
 
+class SlugOptionalMixin:
+    """Делает поле URL (slug) необязательным.
+
+    Если оставить пустым — slug сгенерируется автоматически из названия
+    (см. save() в моделях).
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'slug' in self.fields:
+            self.fields['slug'].required = False
+            self.fields['slug'].widget.attrs['placeholder'] = (
+                'Оставьте пустым — создастся автоматически'
+            )
+
+
 # ===================================================================
 # Core models
 # ===================================================================
@@ -165,7 +181,7 @@ class PageSeoForm(forms.ModelForm):
 # Catalog models
 # ===================================================================
 
-class CategoryForm(forms.ModelForm):
+class CategoryForm(SlugOptionalMixin, forms.ModelForm):
     class Meta:
         model = Category
         fields = [
@@ -183,7 +199,7 @@ class CategoryForm(forms.ModelForm):
         }
 
 
-class ProductForm(forms.ModelForm):
+class ProductForm(SlugOptionalMixin, forms.ModelForm):
     class Meta:
         model = Product
         fields = [
@@ -220,7 +236,7 @@ class ProductImageForm(forms.ModelForm):
 # News models
 # ===================================================================
 
-class ArticleForm(forms.ModelForm):
+class ArticleForm(SlugOptionalMixin, forms.ModelForm):
     class Meta:
         model = Article
         fields = [
@@ -242,7 +258,7 @@ class ArticleForm(forms.ModelForm):
 # Portfolio models
 # ===================================================================
 
-class ProjectForm(forms.ModelForm):
+class ProjectForm(SlugOptionalMixin, forms.ModelForm):
     class Meta:
         model = Project
         fields = [

@@ -1,5 +1,6 @@
 from django.db import models
 from core.models import SeoMixin
+from core.utils import unique_slugify
 
 
 class Project(SeoMixin):
@@ -16,6 +17,11 @@ class Project(SeoMixin):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, self.title)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return f'/portfolio/{self.slug}/'
