@@ -167,6 +167,7 @@ class SiteSettingsForm(TranslatedModelForm):
             ('company_name', text_input),
             ('slogan', text_input),
             ('about_text', textarea),
+            ('about_image', file_input),
             ('phone', text_input),
             ('phone2', text_input),
             ('email', email_input),

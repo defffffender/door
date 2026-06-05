@@ -35,6 +35,7 @@ class SiteSettings(models.Model):
     company_name = models.CharField('Название компании', max_length=200, default='Door Company')
     slogan = models.CharField('Слоган', max_length=300, blank=True)
     about_text = models.TextField('О компании (краткое)', blank=True)
+    about_image = models.ImageField('Фото в блоке «О компании»', upload_to='settings/', blank=True, help_text='Картинка справа от текста «О компании» на главной')
     phone = models.CharField('Телефон', max_length=50, blank=True)
     phone2 = models.CharField('Телефон 2', max_length=50, blank=True)
     email = models.EmailField('Email', blank=True)

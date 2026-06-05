@@ -118,8 +118,8 @@
                 <p>{{ site_settings.about_text|default:"Мы являемся ведущим производителем стальных дверей в Узбекистане. Наша компания сочетает современные технологии производства с индивидуальным подходом к каждому клиенту, обеспечивая высокое качество и надёжность продукции." }}</p>
                 <a href="{% url 'about' %}" class="btn btn--outline">{% trans "Подробнее" %} <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="about-home__image">
-                <img src="{% static 'img/about-placeholder.jpg' %}" alt="{% trans 'О компании' %}" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8edf3,#d0d8e4)';this.style.display='none';">
+            <div class="about-home__image"{% if not site_settings.about_image %} style="background:linear-gradient(135deg,#e8edf3,#d0d8e4);min-height:300px;"{% endif %}>
+                {% if site_settings.about_image %}<img src="{{ site_settings.about_image.url }}" alt="{% trans 'О компании' %}">{% endif %}
             </div>
         </div>
     </div>
