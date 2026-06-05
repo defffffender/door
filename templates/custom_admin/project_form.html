@@ -7,7 +7,7 @@
 <form method="post" enctype="multipart/form-data" class="panel-form">
     {% csrf_token %}
     {% for field in form %}
-    {% if field.name == 'meta_title' %}
+    {% if field.name == 'meta_title_ru' %}
     <h3 class="form-section-title"><i class="fas fa-search"></i> SEO настройки</h3>
     {% endif %}
     <div class="form-group">

@@ -1,5 +1,8 @@
 from django import forms
 
+from modeltranslation.translator import translator
+from modeltranslation.utils import build_localized_fieldname
+
 from core.models import (
     SiteSettings, Banner, Advantage, Statistic, Partner, QualityPillar, PageSeo,
 )
@@ -10,29 +13,129 @@ from contacts.models import ContactRequest
 
 
 # ---------------------------------------------------------------------------
-# Reusable widget helpers
+# Multi-language helpers (django-modeltranslation)
 # ---------------------------------------------------------------------------
 
-TEXT_INPUT = forms.TextInput(attrs={'class': 'form-control'})
-TEXT_INPUT_SLUG = forms.TextInput(attrs={'class': 'form-control slug-field'})
-TEXTAREA = forms.Textarea(attrs={'class': 'form-control', 'rows': 4})
-TEXTAREA_SMALL = forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
-SELECT = forms.Select(attrs={'class': 'form-control'})
-NUMBER_INPUT = forms.NumberInput(attrs={'class': 'form-control'})
-CHECKBOX = forms.CheckboxInput(attrs={'class': 'form-check-input'})
-FILE_INPUT = forms.ClearableFileInput(attrs={'class': 'form-control'})
-URL_INPUT = forms.URLInput(attrs={'class': 'form-control'})
-EMAIL_INPUT = forms.EmailInput(attrs={'class': 'form-control'})
-COLOR_INPUT = forms.TextInput(attrs={'class': 'form-control form-control-color', 'type': 'color'})
+LANGUAGES = ['ru', 'uz', 'en']
+DEFAULT_LANG = 'ru'
+LANG_LABELS = {'ru': 'RU', 'uz': 'UZ', 'en': 'EN'}
 
 
-def _seo_widgets():
-    """Return the widget dict fragment shared by every SEO-enabled model."""
-    return {
-        'meta_title': forms.TextInput(attrs={'class': 'form-control'}),
-        'meta_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-        'meta_keywords': forms.TextInput(attrs={'class': 'form-control'}),
-    }
+# ---------------------------------------------------------------------------
+# Reusable widget factories
+#
+# Factories (not shared instances) are used so every form field — including the
+# per-language variants generated below — gets its own widget object.
+# ---------------------------------------------------------------------------
+
+def text_input():
+    return forms.TextInput(attrs={'class': 'form-control'})
+
+
+def slug_input():
+    return forms.TextInput(attrs={'class': 'form-control slug-field'})
+
+
+def textarea():
+    return forms.Textarea(attrs={'class': 'form-control', 'rows': 4})
+
+
+def textarea_small():
+    return forms.Textarea(attrs={'class': 'form-control', 'rows': 3})
+
+
+def textarea_large():
+    return forms.Textarea(attrs={'class': 'form-control', 'rows': 10})
+
+
+def select():
+    return forms.Select(attrs={'class': 'form-control'})
+
+
+def number_input():
+    return forms.NumberInput(attrs={'class': 'form-control'})
+
+
+def checkbox():
+    return forms.CheckboxInput(attrs={'class': 'form-check-input'})
+
+
+def file_input():
+    return forms.ClearableFileInput(attrs={'class': 'form-control'})
+
+
+def url_input():
+    return forms.URLInput(attrs={'class': 'form-control'})
+
+
+def email_input():
+    return forms.EmailInput(attrs={'class': 'form-control'})
+
+
+def color_input():
+    return forms.TextInput(attrs={'class': 'form-control form-control-color', 'type': 'color'})
+
+
+def map_textarea():
+    return forms.Textarea(attrs={'class': 'form-control', 'rows': 5})
+
+
+def build_meta(model, specs):
+    """Build (fields, widgets) for a ModelForm Meta from ordered specs.
+
+    ``specs`` is a list of ``(field_name, widget_factory)`` tuples. Any field
+    that is translatable (registered with modeltranslation) is expanded into
+    its per-language variants — e.g. ``name`` becomes ``name_ru``, ``name_uz``,
+    ``name_en`` — so all three languages can be edited side by side in /panel/.
+    """
+    try:
+        translatable = set(translator.get_options_for_model(model).fields)
+    except Exception:
+        translatable = set()
+
+    fields = []
+    widgets = {}
+    for name, factory in specs:
+        if name in translatable:
+            for lang in LANGUAGES:
+                loc = build_localized_fieldname(name, lang)
+                fields.append(loc)
+                widgets[loc] = factory()
+        else:
+            fields.append(name)
+            widgets[name] = factory()
+    return fields, widgets
+
+
+class TranslatedModelForm(forms.ModelForm):
+    """Adds language suffix labels (RU/UZ/EN) to translated fields.
+
+    The Russian (default-language) variant keeps the original required state;
+    the Uzbek and English variants are always optional, so partial translations
+    are allowed — empty ones fall back to Russian on the site.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        model = self._meta.model
+        try:
+            bases = translator.get_options_for_model(model).fields
+        except Exception:
+            bases = ()
+        for base in bases:
+            try:
+                model_field = model._meta.get_field(base)
+                base_label = model_field.verbose_name
+                base_required = not model_field.blank
+            except Exception:
+                base_label, base_required = base, False
+            for lang in LANGUAGES:
+                loc = build_localized_fieldname(base, lang)
+                if loc in self.fields:
+                    self.fields[loc].label = f'{base_label} ({LANG_LABELS[lang]})'
+                    self.fields[loc].required = (
+                        base_required if lang == DEFAULT_LANG else False
+                    )
 
 
 class SlugOptionalMixin:
@@ -55,170 +158,146 @@ class SlugOptionalMixin:
 # Core models
 # ===================================================================
 
-class SiteSettingsForm(forms.ModelForm):
+class SiteSettingsForm(TranslatedModelForm):
     class Meta:
         model = SiteSettings
-        fields = [
-            'logo', 'favicon', 'company_name', 'slogan', 'about_text',
-            'phone', 'phone2', 'email', 'address',
-            'telegram_url', 'instagram_url', 'map_embed', 'catalog_pdf',
-            'telegram_bot_token', 'telegram_chat_id',
+        fields, widgets = build_meta(SiteSettings, [
+            ('logo', file_input),
+            ('favicon', file_input),
+            ('company_name', text_input),
+            ('slogan', text_input),
+            ('about_text', textarea),
+            ('phone', text_input),
+            ('phone2', text_input),
+            ('email', email_input),
+            ('address', text_input),
+            ('telegram_url', url_input),
+            ('instagram_url', url_input),
+            ('map_embed', map_textarea),
+            ('catalog_pdf', file_input),
+            ('telegram_bot_token', text_input),
+            ('telegram_chat_id', text_input),
             # Theme
-            'theme_primary', 'theme_primary_hover', 'theme_dark', 'theme_accent',
-            'theme_bg_light', 'theme_bg_accent',
-            'theme_text', 'theme_text_light',
-            'theme_success', 'theme_danger', 'theme_warning',
-            'theme_font',
-        ]
-        widgets = {
-            'logo': FILE_INPUT,
-            'favicon': FILE_INPUT,
-            'company_name': TEXT_INPUT,
-            'slogan': TEXT_INPUT,
-            'about_text': TEXTAREA,
-            'phone': TEXT_INPUT,
-            'phone2': TEXT_INPUT,
-            'email': EMAIL_INPUT,
-            'address': TEXT_INPUT,
-            'telegram_url': URL_INPUT,
-            'instagram_url': URL_INPUT,
-            'map_embed': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
-            'catalog_pdf': FILE_INPUT,
-            'telegram_bot_token': TEXT_INPUT,
-            'telegram_chat_id': TEXT_INPUT,
-            # Theme
-            'theme_primary': COLOR_INPUT,
-            'theme_primary_hover': COLOR_INPUT,
-            'theme_dark': COLOR_INPUT,
-            'theme_accent': COLOR_INPUT,
-            'theme_bg_light': COLOR_INPUT,
-            'theme_bg_accent': COLOR_INPUT,
-            'theme_text': COLOR_INPUT,
-            'theme_text_light': COLOR_INPUT,
-            'theme_success': COLOR_INPUT,
-            'theme_danger': COLOR_INPUT,
-            'theme_warning': COLOR_INPUT,
-            'theme_font': TEXT_INPUT,
-        }
+            ('theme_primary', color_input),
+            ('theme_primary_hover', color_input),
+            ('theme_dark', color_input),
+            ('theme_accent', color_input),
+            ('theme_bg_light', color_input),
+            ('theme_bg_accent', color_input),
+            ('theme_text', color_input),
+            ('theme_text_light', color_input),
+            ('theme_success', color_input),
+            ('theme_danger', color_input),
+            ('theme_warning', color_input),
+            ('theme_font', text_input),
+        ])
 
 
-class BannerForm(forms.ModelForm):
+class BannerForm(TranslatedModelForm):
     class Meta:
         model = Banner
-        fields = [
-            'title', 'subtitle', 'image', 'button_text', 'button_url',
-            'order', 'is_active',
-        ]
-        widgets = {
-            'title': TEXT_INPUT,
-            'subtitle': TEXTAREA_SMALL,
-            'image': FILE_INPUT,
-            'button_text': TEXT_INPUT,
-            'button_url': URL_INPUT,
-            'order': NUMBER_INPUT,
-            'is_active': CHECKBOX,
-        }
+        fields, widgets = build_meta(Banner, [
+            ('title', text_input),
+            ('subtitle', textarea_small),
+            ('image', file_input),
+            ('button_text', text_input),
+            ('button_url', url_input),
+            ('order', number_input),
+            ('is_active', checkbox),
+        ])
 
 
-class AdvantageForm(forms.ModelForm):
+class AdvantageForm(TranslatedModelForm):
     class Meta:
         model = Advantage
-        fields = ['icon', 'title', 'description', 'order']
-        widgets = {
-            'icon': TEXT_INPUT,
-            'title': TEXT_INPUT,
-            'description': TEXTAREA_SMALL,
-            'order': NUMBER_INPUT,
-        }
+        fields, widgets = build_meta(Advantage, [
+            ('icon', text_input),
+            ('title', text_input),
+            ('description', textarea_small),
+            ('order', number_input),
+        ])
 
 
-class StatisticForm(forms.ModelForm):
+class StatisticForm(TranslatedModelForm):
     class Meta:
         model = Statistic
-        fields = ['number', 'label', 'order']
-        widgets = {
-            'number': TEXT_INPUT,
-            'label': TEXT_INPUT,
-            'order': NUMBER_INPUT,
-        }
+        fields, widgets = build_meta(Statistic, [
+            ('number', text_input),
+            ('label', text_input),
+            ('order', number_input),
+        ])
 
 
-class PartnerForm(forms.ModelForm):
+class PartnerForm(TranslatedModelForm):
     class Meta:
         model = Partner
-        fields = ['name', 'logo', 'url', 'order']
-        widgets = {
-            'name': TEXT_INPUT,
-            'logo': FILE_INPUT,
-            'url': URL_INPUT,
-            'order': NUMBER_INPUT,
-        }
+        fields, widgets = build_meta(Partner, [
+            ('name', text_input),
+            ('logo', file_input),
+            ('url', url_input),
+            ('order', number_input),
+        ])
 
 
-class QualityPillarForm(forms.ModelForm):
+class QualityPillarForm(TranslatedModelForm):
     class Meta:
         model = QualityPillar
-        fields = ['title', 'description', 'image', 'order']
-        widgets = {
-            'title': TEXT_INPUT,
-            'description': TEXTAREA,
-            'image': FILE_INPUT,
-            'order': NUMBER_INPUT,
-        }
+        fields, widgets = build_meta(QualityPillar, [
+            ('title', text_input),
+            ('description', textarea),
+            ('image', file_input),
+            ('order', number_input),
+        ])
 
 
-class PageSeoForm(forms.ModelForm):
+class PageSeoForm(TranslatedModelForm):
     class Meta:
         model = PageSeo
-        fields = ['page', 'meta_title', 'meta_description', 'meta_keywords']
-        widgets = {
-            'page': SELECT,
-            **_seo_widgets(),
-        }
+        fields, widgets = build_meta(PageSeo, [
+            ('page', select),
+            ('meta_title', text_input),
+            ('meta_description', textarea_small),
+            ('meta_keywords', text_input),
+        ])
 
 
 # ===================================================================
 # Catalog models
 # ===================================================================
 
-class CategoryForm(SlugOptionalMixin, forms.ModelForm):
+class CategoryForm(SlugOptionalMixin, TranslatedModelForm):
     class Meta:
         model = Category
-        fields = [
-            'name', 'slug', 'image', 'description', 'order',
+        fields, widgets = build_meta(Category, [
+            ('name', text_input),
+            ('slug', slug_input),
+            ('image', file_input),
+            ('description', textarea),
+            ('order', number_input),
             # SEO fields (grouped at end)
-            'meta_title', 'meta_description', 'meta_keywords',
-        ]
-        widgets = {
-            'name': TEXT_INPUT,
-            'slug': TEXT_INPUT_SLUG,
-            'image': FILE_INPUT,
-            'description': TEXTAREA,
-            'order': NUMBER_INPUT,
-            **_seo_widgets(),
-        }
+            ('meta_title', text_input),
+            ('meta_description', textarea_small),
+            ('meta_keywords', text_input),
+        ])
 
 
-class ProductForm(SlugOptionalMixin, forms.ModelForm):
+class ProductForm(SlugOptionalMixin, TranslatedModelForm):
     class Meta:
         model = Product
-        fields = [
-            'category', 'name', 'slug', 'price', 'image',
-            'description', 'is_popular', 'order',
+        fields, widgets = build_meta(Product, [
+            ('category', select),
+            ('name', text_input),
+            ('slug', slug_input),
+            ('price', number_input),
+            ('image', file_input),
+            ('description', textarea),
+            ('is_popular', checkbox),
+            ('order', number_input),
             # SEO fields (grouped at end)
-            'meta_title', 'meta_description', 'meta_keywords',
-        ]
-        widgets = {
-            'category': SELECT,
-            'name': TEXT_INPUT,
-            'slug': TEXT_INPUT_SLUG,
-            'price': NUMBER_INPUT,
-            'image': FILE_INPUT,
-            'description': TEXTAREA,
-            'is_popular': CHECKBOX,
-            'order': NUMBER_INPUT,
-            **_seo_widgets(),
-        }
+            ('meta_title', text_input),
+            ('meta_description', textarea_small),
+            ('meta_keywords', text_input),
+        ])
 
 
 class ProductImageForm(forms.ModelForm):
@@ -226,9 +305,9 @@ class ProductImageForm(forms.ModelForm):
         model = ProductImage
         fields = ['product', 'image', 'order']
         widgets = {
-            'product': SELECT,
-            'image': FILE_INPUT,
-            'order': NUMBER_INPUT,
+            'product': select(),
+            'image': file_input(),
+            'order': number_input(),
         }
 
 
@@ -236,43 +315,39 @@ class ProductImageForm(forms.ModelForm):
 # News models
 # ===================================================================
 
-class ArticleForm(SlugOptionalMixin, forms.ModelForm):
+class ArticleForm(SlugOptionalMixin, TranslatedModelForm):
     class Meta:
         model = Article
-        fields = [
-            'title', 'slug', 'image', 'content', 'is_published',
+        fields, widgets = build_meta(Article, [
+            ('title', text_input),
+            ('slug', slug_input),
+            ('image', file_input),
+            ('content', textarea_large),
+            ('is_published', checkbox),
             # SEO fields (grouped at end)
-            'meta_title', 'meta_description', 'meta_keywords',
-        ]
-        widgets = {
-            'title': TEXT_INPUT,
-            'slug': TEXT_INPUT_SLUG,
-            'image': FILE_INPUT,
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
-            'is_published': CHECKBOX,
-            **_seo_widgets(),
-        }
+            ('meta_title', text_input),
+            ('meta_description', textarea_small),
+            ('meta_keywords', text_input),
+        ])
 
 
 # ===================================================================
 # Portfolio models
 # ===================================================================
 
-class ProjectForm(SlugOptionalMixin, forms.ModelForm):
+class ProjectForm(SlugOptionalMixin, TranslatedModelForm):
     class Meta:
         model = Project
-        fields = [
-            'title', 'slug', 'image', 'description',
+        fields, widgets = build_meta(Project, [
+            ('title', text_input),
+            ('slug', slug_input),
+            ('image', file_input),
+            ('description', textarea),
             # SEO fields (grouped at end)
-            'meta_title', 'meta_description', 'meta_keywords',
-        ]
-        widgets = {
-            'title': TEXT_INPUT,
-            'slug': TEXT_INPUT_SLUG,
-            'image': FILE_INPUT,
-            'description': TEXTAREA,
-            **_seo_widgets(),
-        }
+            ('meta_title', text_input),
+            ('meta_description', textarea_small),
+            ('meta_keywords', text_input),
+        ])
 
 
 class ProjectImageForm(forms.ModelForm):
@@ -280,9 +355,9 @@ class ProjectImageForm(forms.ModelForm):
         model = ProjectImage
         fields = ['project', 'image', 'order']
         widgets = {
-            'project': SELECT,
-            'image': FILE_INPUT,
-            'order': NUMBER_INPUT,
+            'project': select(),
+            'image': file_input(),
+            'order': number_input(),
         }
 
 
@@ -295,10 +370,10 @@ class ContactRequestForm(forms.ModelForm):
         model = ContactRequest
         fields = ['name', 'phone', 'email', 'message', 'file', 'is_read']
         widgets = {
-            'name': TEXT_INPUT,
-            'phone': TEXT_INPUT,
-            'email': EMAIL_INPUT,
-            'message': TEXTAREA,
-            'file': FILE_INPUT,
-            'is_read': CHECKBOX,
+            'name': text_input(),
+            'phone': text_input(),
+            'email': email_input(),
+            'message': textarea(),
+            'file': file_input(),
+            'is_read': checkbox(),
         }
