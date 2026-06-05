@@ -81,7 +81,7 @@ class SiteSettings(models.Model):
 class Banner(models.Model):
     title = models.CharField('Заголовок', max_length=200)
     subtitle = models.CharField('Подзаголовок', max_length=300, blank=True)
-    image = models.ImageField('Изображение', upload_to='banners/')
+    image = models.ImageField('Изображение', upload_to='slides/')
     button_text = models.CharField('Текст кнопки', max_length=100, default='Связаться с нами')
     button_url = models.CharField('Ссылка кнопки', max_length=300, default='/contacts/')
     order = models.PositiveIntegerField('Порядок', default=0)
