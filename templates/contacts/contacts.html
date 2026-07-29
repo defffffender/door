@@ -67,6 +67,8 @@
                 <h3>{% trans "Оставить заявку" %}</h3>
                 <form method="post" enctype="multipart/form-data" class="contact-form">
                     {% csrf_token %}
+                    <input type="text" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;overflow:hidden;">
+
                     {% for field in form %}
                     <div class="form-group">
                         {{ field }}

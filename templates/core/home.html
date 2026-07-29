@@ -253,6 +253,8 @@
             <p class="section__subtitle">{% trans "Оставьте заявку и мы свяжемся с вами в ближайшее время" %}</p>
             <form action="{% url 'contacts' %}" method="post" class="contact-form contact-form--home">
                 {% csrf_token %}
+                <input type="text" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;overflow:hidden;">
+
                 <div class="contact-form__row">
                     <input type="text" name="name" placeholder="{% trans 'Ваше имя' %}" class="form-input" required>
                     <input type="tel" name="phone" placeholder="+998 __ ___ __ __" class="form-input" required>
